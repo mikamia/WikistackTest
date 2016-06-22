@@ -66,7 +66,71 @@ describe('Pages model', function () {
       	}).catch(done);
       });
 	  });
-	});
+	}); //end of class methods describe
+
+	describe('Instance methods', function () {
+
+		//create 3 pages
+		beforeEach(function (done) {
+
+  		var p1 = Page.create({
+		    title: 'foo1',
+		    content: 'bar',
+		    tags: ['foo','tomato']
+  		})
+
+  		var p2 = Page.create({
+		    title: 'foo',
+		    content: 'bar',
+		    tags: ['footissimo', 'foo']
+  		})
+
+  		var p3 = Page.create({
+		    title: 'foo',
+		    content: 'bar',
+		    tags: ['baz']
+  		})
+
+  		Promise.all([p1,p2,p3]).then(function(){
+    		done();
+  		}).catch(done);
+
+		});
+
+		afterEach(function (done){
+			Page.sync({force:true}).then(function(){
+				done();
+			}).catch(done);
+
+		});
+
+    describe('findSimilar', function () {
+      it('never gets itself', function(done){
+      	return Page.findOne({
+      		where: {
+      			title: 'foo1'
+      		}
+      	}).then(function(foundPage){
+      		return foundPage.findSimilar().then(function(similarPages){
+      			var same = false;
+      			similarPages.forEach(function(aPage){
+      				if(aPage.id === foundPage.id) same = true;
+      			});
+      			expect(same).to.equal(false);
+      			done();
+      			})
+      	}).catch(done);
+    	}); //end of it
+      it('gets other pages with any common tags');
+      it('does not get other pages without any common tags');
+    });
+  });
+
+  describe('Validations', function () {
+    it('errors without title');
+    it('errors without content');
+    it('errors given an invalid status');
+  });
 
 
 });
