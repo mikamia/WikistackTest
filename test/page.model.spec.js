@@ -127,9 +127,25 @@ describe('Pages model', function () {
   });
 
   describe('Validations', function () {
-    it('errors without title');
-    it('errors without content');
-    it('errors given an invalid status');
+
+  	var page;
+		beforeEach(function () {
+  		page = Page.build();
+		});
+
+    it('errors without title', function(done){
+    	page.validate().then(function(err){
+	    	console.log(err);
+	    	expect(err).to.exist;
+	    	expect(err.errors).to.exist;
+	    	expect(err.errors[0].path).to.equal('title');
+	    	done();
+	    });
+    });
+
+
+    xit('errors without content');
+    xit('errors given an invalid status');
   });
 
 
