@@ -10,12 +10,18 @@ describe('Pages model', function () {
 	beforeEach(function () {
 		page = Page.build();
 	});
+
 	describe('route', function () {
 		it('returns the url_name prepended by "/wiki/"', function() {
 			page.urlTitle = 'some_title';
 			expect(page.route).to.equal("/wiki/some_title" );
 		});
-		//xit('');
 	});
-	//describe('renderedContent');
+
+	describe('renderedContent', function () {
+      it('converts the markdown-formatted content into HTML', function(){
+      		page.content = "some content";
+      		expect(page.renderedContent).to.equal('<p>'+page.content+'</p>\n');
+      });
+    });
 });
