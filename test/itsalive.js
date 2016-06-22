@@ -10,7 +10,7 @@ describe("Testing tests", function() {
 		expect(2 + 2).to.equal(4);
 	});
 
-	it("setTimeout waits for the right amount of time", function(done) {
+	xit("setTimeout waits for the right amount of time", function(done) {
 		var start = new Date();
 		setTimeout(function() {
 			var duration = new Date() - start;
